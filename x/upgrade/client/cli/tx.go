@@ -38,6 +38,8 @@ func GetTxCmd(ac addresscodec.Codec) *cobra.Command {
 	cmd.AddCommand(
 		NewCmdSubmitUpgradeProposal(ac),
 		NewCmdSubmitCancelUpgradeProposal(ac),
+		NewCmdManualUpgrade(),
+		NewCmdManualCancelUpgrade(),
 	)
 
 	return cmd
