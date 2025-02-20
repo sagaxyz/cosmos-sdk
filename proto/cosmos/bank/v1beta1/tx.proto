@@ -33,6 +33,11 @@ service Msg {
   //
   // Since: cosmos-sdk 0.47
   rpc SetSendEnabled(MsgSetSendEnabled) returns (MsgSetSendEnabledResponse);
+  // SetMetadata is an admin operation for setting the Metadata for
+  // a given denom. The authority is defined in the keeper.
+  //
+  // Since: cosmos-sdk 0.47
+  rpc SetMetadata(MsgSetMetadata) returns (MsgSetMetadataResponse);
 }
 
 // MsgSend represents a message to send coins from one account to another.
@@ -120,3 +125,20 @@ message MsgSetSendEnabled {
 //
 // Since: cosmos-sdk 0.47
 message MsgSetSendEnabledResponse {}
+
+// MsgSetMetadata is the Msg/MsgSetMetadata request type.
+//
+//
+// Since: cosmos-sdk 0.47-saga.2
+message MsgSetMetadata {
+  option (cosmos.msg.v1.signer) = "sender";
+  option (amino.name)           = "cosmos-sdk/MsgSetMetadata";
+
+  string   sender   = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  Metadata metadata = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+// SetMetadataResponse defines the Msg/MsgSetMetadata response type.
+//
+// Since: cosmos-sdk 0.47-saga.2
+message MsgSetMetadataResponse {}

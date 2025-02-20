@@ -23,3 +23,7 @@ func (k MockBankKeeper) UpdateParams(goCtx context.Context, req *bank.MsgUpdateP
 func (k MockBankKeeper) SetSendEnabled(goCtx context.Context, req *bank.MsgSetSendEnabled) (*bank.MsgSetSendEnabledResponse, error) {
 	return nil, nil
 }
+
+func (k MockBankKeeper) SetMetadata(goCtx context.Context, req *bank.MsgSetMetadata) (*bank.MsgSetMetadataResponse, error) {
+	return nil, nil
+}
