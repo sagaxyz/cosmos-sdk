@@ -174,6 +174,7 @@ var (
 				Name: banktypes.ModuleName,
 				Config: appconfig.WrapAny(&bankmodulev1.Module{
 					BlockedModuleAccountsOverride: blockAccAddrs,
+					Authority:                     "cosmos1f707nyjehspmlajxnm3zjnm2h0ssqqp3h070pu",
 				}),
 			},
 			{

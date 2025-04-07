@@ -28,6 +28,7 @@ func NewTxCmd() *cobra.Command {
 	txCmd.AddCommand(
 		NewSendTxCmd(),
 		NewMultiSendTxCmd(),
+		NewSetMetadataCmd(),
 	)
 
 	return txCmd
