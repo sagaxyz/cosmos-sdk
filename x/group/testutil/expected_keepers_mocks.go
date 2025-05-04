@@ -241,3 +241,19 @@ func (mr *MockBankKeeperMockRecorder) UpdateParams(arg0, arg1 interface{}) *gomo
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateParams", reflect.TypeOf((*MockBankKeeper)(nil).UpdateParams), arg0, arg1)
 }
+
+
+// SetMetadata mocks base method.
+func (m *MockBankKeeper) SetMetadata(arg0 context.Context, arg1 *types1.MsgSetMetadata) (*types1.MsgSetMetadataResponse, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetMetadata", arg0, arg1)
+	ret0, _ := ret[0].(*types1.MsgSetMetadataResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetMetadata indicates an expected call of SetMetadata.
+func (mr *MockBankKeeperMockRecorder) SetMetadata(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMetadata", reflect.TypeOf((*MockBankKeeper)(nil).SetMetadata), arg0, arg1)
+}

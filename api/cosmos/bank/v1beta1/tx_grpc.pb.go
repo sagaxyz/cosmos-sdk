@@ -23,6 +23,7 @@ const (
 	Msg_MultiSend_FullMethodName      = "/cosmos.bank.v1beta1.Msg/MultiSend"
 	Msg_UpdateParams_FullMethodName   = "/cosmos.bank.v1beta1.Msg/UpdateParams"
 	Msg_SetSendEnabled_FullMethodName = "/cosmos.bank.v1beta1.Msg/SetSendEnabled"
+	Msg_SetMetadata_FullMethodName    = "/cosmos.bank.v1beta1.Msg/SetMetadata"
 )
 
 // MsgClient is the client API for Msg service.
@@ -45,6 +46,11 @@ type MsgClient interface {
 	//
 	// Since: cosmos-sdk 0.47
 	SetSendEnabled(ctx context.Context, in *MsgSetSendEnabled, opts ...grpc.CallOption) (*MsgSetSendEnabledResponse, error)
+	// SetMetadata is an admin operation for setting the Metadata for
+	// a given denom. The authority is defined in the keeper.
+	//
+	// Since: cosmos-sdk 0.47
+	SetMetadata(ctx context.Context, in *MsgSetMetadata, opts ...grpc.CallOption) (*MsgSetMetadataResponse, error)
 }
 
 type msgClient struct {
@@ -91,6 +97,15 @@ func (c *msgClient) SetSendEnabled(ctx context.Context, in *MsgSetSendEnabled, o
 	return out, nil
 }
 
+func (c *msgClient) SetMetadata(ctx context.Context, in *MsgSetMetadata, opts ...grpc.CallOption) (*MsgSetMetadataResponse, error) {
+	out := new(MsgSetMetadataResponse)
+	err := c.cc.Invoke(ctx, Msg_SetMetadata_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 // All implementations must embed UnimplementedMsgServer
 // for forward compatibility
@@ -111,6 +126,11 @@ type MsgServer interface {
 	//
 	// Since: cosmos-sdk 0.47
 	SetSendEnabled(context.Context, *MsgSetSendEnabled) (*MsgSetSendEnabledResponse, error)
+	// SetMetadata is an admin operation for setting the Metadata for
+	// a given denom. The authority is defined in the keeper.
+	//
+	// Since: cosmos-sdk 0.47
+	SetMetadata(context.Context, *MsgSetMetadata) (*MsgSetMetadataResponse, error)
 	mustEmbedUnimplementedMsgServer()
 }
 
@@ -129,6 +149,9 @@ func (UnimplementedMsgServer) UpdateParams(context.Context, *MsgUpdateParams) (*
 }
 func (UnimplementedMsgServer) SetSendEnabled(context.Context, *MsgSetSendEnabled) (*MsgSetSendEnabledResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetSendEnabled not implemented")
+}
+func (UnimplementedMsgServer) SetMetadata(context.Context, *MsgSetMetadata) (*MsgSetMetadataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetMetadata not implemented")
 }
 func (UnimplementedMsgServer) mustEmbedUnimplementedMsgServer() {}
 
@@ -215,6 +238,24 @@ func _Msg_SetSendEnabled_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_SetMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgSetMetadata)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).SetMetadata(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Msg_SetMetadata_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).SetMetadata(ctx, req.(*MsgSetMetadata))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Msg_ServiceDesc is the grpc.ServiceDesc for Msg service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -237,6 +278,10 @@ var Msg_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetSendEnabled",
 			Handler:    _Msg_SetSendEnabled_Handler,
+		},
+		{
+			MethodName: "SetMetadata",
+			Handler:    _Msg_SetMetadata_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
