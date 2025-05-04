@@ -31,6 +31,7 @@ func NewTxCmd(ac address.Codec) *cobra.Command {
 	txCmd.AddCommand(
 		NewSendTxCmd(ac),
 		NewMultiSendTxCmd(ac),
+		NewSetMetadataCmd(ac),
 	)
 
 	return txCmd
