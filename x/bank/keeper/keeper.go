@@ -35,6 +35,7 @@ type Keeper interface {
 	GetDenomMetaData(ctx context.Context, denom string) (types.Metadata, bool)
 	HasDenomMetaData(ctx context.Context, denom string) bool
 	SetDenomMetaData(ctx context.Context, denomMetaData types.Metadata)
+	DeleteDenomMetaData(ctx context.Context, base string)
 	GetAllDenomMetaData(ctx context.Context) []types.Metadata
 	IterateAllDenomMetaData(ctx context.Context, cb func(types.Metadata) bool)
 
@@ -251,6 +252,10 @@ func (k BaseKeeper) IterateAllDenomMetaData(ctx context.Context, cb func(types.M
 // SetDenomMetaData sets the denominations metadata
 func (k BaseKeeper) SetDenomMetaData(ctx context.Context, denomMetaData types.Metadata) {
 	_ = k.BaseViewKeeper.DenomMetadata.Set(ctx, denomMetaData.Base, denomMetaData)
+}
+
+func (k BaseKeeper) DeleteDenomMetaData(ctx context.Context, base string) {
+	_ = k.BaseViewKeeper.DenomMetadata.Remove(ctx, base)
 }
 
 // SendCoinsFromModuleToAccount transfers coins from a ModuleAccount to an AccAddress.
